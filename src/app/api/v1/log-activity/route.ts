@@ -21,7 +21,7 @@ export async function POST(req: Request) {
 
     // 3. Basic Validation
     if (!device_id || !app_name || !event_type || latitude === undefined || longitude === undefined) {
-      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+      return NextResponse.json({ error: 'Missing required fields', received: body }, { status: 400 });
     }
 
     // 4. Save to Database
