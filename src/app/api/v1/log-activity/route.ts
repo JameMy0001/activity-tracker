@@ -5,9 +5,13 @@ export async function POST(req: Request) {
   try {
     // 1. Check Authorization Header
     const authHeader = req.headers.get('authorization');
+    const apiKeyHeader = req.headers.get('x-api-key');
     const secretKey = process.env.SECRET_API_KEY;
 
-    if (!authHeader || authHeader !== `Bearer ${secretKey}`) {
+    if (
+      (!authHeader || authHeader !== `Bearer ${secretKey}`) &&
+      (!apiKeyHeader || apiKeyHeader !== secretKey)
+    ) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
